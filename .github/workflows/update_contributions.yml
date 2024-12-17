@@ -23,20 +23,20 @@ jobs:
           github_user_name: ${{ github.repository_owner }}
           outputs: dist/github-contributions.svg
 
-      # Step 3: Install dependencies for image conversion
-      - name: Install rsvg-convert
-        run: sudo apt-get install -y librsvg2-bin
+      # Step 3: Install ImageMagick for SVG to GIF conversion
+      - name: Install ImageMagick
+        run: sudo apt-get update && sudo apt-get install -y imagemagick
 
-      # Step 4: Convert SVG to PNG
-      - name: Convert SVG to PNG
+      # Step 4: Convert SVG to GIF
+      - name: Convert SVG to GIF
         run: |
-          rsvg-convert -o dist/github-contributions.png dist/github-contributions.svg
+          convert dist/github-contributions.svg dist/github-contributions.gif
 
-      # Step 5: Commit and push changes
+      # Step 5: Commit and Push Changes
       - name: Commit and Push Changes
         run: |
           git config --local user.email "roberttk01@gmail.com"
           git config --local user.name "GitHub Actions"
           git add dist/
-          git commit -m "Update GitHub contributions image (PNG)" || echo "No changes to commit"
+          git commit -m "Update GitHub contributions image (GIF)" || echo "No changes to commit"
           git push
