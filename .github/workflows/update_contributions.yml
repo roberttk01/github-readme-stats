@@ -5,7 +5,7 @@ on:
     - cron: "0 0 * * *"  # Runs daily at midnight UTC
   push:
     branches:
-      - main
+      - master
 
 jobs:
   update-image:
@@ -19,7 +19,7 @@ jobs:
         uses: Platane/snk@v3
         with:
           github_user_name: ${{ github.repository_owner }}
-          outputs: dist/github-contributions.svg
+          outputs: dist/github-contributions.png
 
       - name: Commit and Push Changes
         run: |
