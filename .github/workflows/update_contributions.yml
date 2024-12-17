@@ -1,4 +1,4 @@
-name: Update GitHub Contributions Image
+name: Generate Static GitHub Contribution Graph
 
 on:
   schedule:
@@ -8,7 +8,7 @@ on:
       - master
 
 jobs:
-  update-image:
+  generate-graph:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,30 +16,16 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      # Step 2: Generate the GitHub contribution snake image (SVG)
-      - name: Generate GitHub Contribution Snake Image
-        uses: Platane/snk@v3
-        with:
-          github_user_name: ${{ github.repository_owner }}
-          outputs: dist/github-contributions.svg
-
-      # Step 3: Install rsvg-convert and ImageMagick
-      - name: Install rsvg-convert and ImageMagick
+      # Step 2: Fetch Contribution Graph using GitHub Stats API
+      - name: Fetch Contribution Graph
         run: |
-          sudo apt-get update
-          sudo apt-get install -y librsvg2-bin imagemagick
+          curl "https://github-readme-stats.vercel.app/api?username=roberttk01&show_icons=true&include_all_commits=true&theme=default&hide_border=true" -o dist/github-contributions.png
 
-      # Step 4: Convert SVG to PNG, then PNG to GIF
-      - name: Convert SVG to PNG and then to GIF
-        run: |
-          rsvg-convert dist/github-contributions.svg -o dist/github-contributions.png
-          convert dist/github-contributions.png dist/github-contributions.gif
-
-      # Step 5: Commit and Push Changes
+      # Step 3: Commit and Push Changes
       - name: Commit and Push Changes
         run: |
           git config --local user.email "roberttk01@gmail.com"
           git config --local user.name "GitHub Actions"
           git add dist/
-          git commit -m "Update GitHub contributions image (GIF)" || echo "No changes to commit"
+          git commit -m "Update static GitHub contributions graph" || echo "No changes to commit"
           git push
