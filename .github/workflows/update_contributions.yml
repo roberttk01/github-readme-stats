@@ -25,6 +25,6 @@ jobs:
         run: |
           git config --local user.email "kyle.robertson@inrock.com"
           git config --local user.name "GitHub Actions"
-          git add dist/github-contributions.svg
+          git add dist/github-contributions.png
           git commit -m "Update GitHub contributions image" || echo "No changes to commit"
           git push
