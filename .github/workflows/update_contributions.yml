@@ -14,16 +14,16 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-        - name: Generate GitHub Contribution Image (PNG)
+      - name: Generate GitHub Contribution Snake Image
         uses: Platane/snk@v3
         with:
-            github_user_name: ${{ github.repository_owner }}
-            outputs: |
-                dist/github-contributions.png
+          github_user_name: ${{ github.repository_owner }}
+          outputs: |
+            dist/github-contributions.png
 
       - name: Commit and Push Changes
         run: |
-          git config --local user.email "kyle.robertson@inrock.com"
+          git config --local user.email "roberttk01@gmail.com"
           git config --local user.name "GitHub Actions"
           git add dist/github-contributions.png
           git commit -m "Update GitHub contributions image" || echo "No changes to commit"
